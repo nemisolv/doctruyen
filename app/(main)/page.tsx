@@ -1,7 +1,11 @@
+import { Banner } from "@/components/banner";
+import { StoryList } from "@/components/story-list";
+
 const page = () => {
     return ( 
         <div>
-            <h1 > home Page</h1>
+            <Banner/>
+            <StoryList title="New released comics" type="comic"/>
         </div>
      );
 }

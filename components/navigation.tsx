@@ -31,7 +31,7 @@ export const Navigation = () => {
     return (
         <nav className="flex items-center justify-between h-[52px] dark:text-white py-6">
             <div className="flex items-center gap-x-2">
-                <Bot className='text-yellow-500' size={30} />
+                <Bot className='text-primary' size={30} />
                 <h2 className="text-2xl">BacaKomic</h2>
             </div>
             <ul className="flex items-center gap-4 dark:text-zinc-300">
