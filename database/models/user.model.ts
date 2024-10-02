@@ -2,7 +2,7 @@ import mongoose, { Document, models, Schema } from 'mongoose';
 const DOCUMENT_NAME = 'User';
 const COLLECTION_NAME = 'users';
 
-interface IUser extends Document {
+export interface IUser extends Document {
     clerkId: string;
     name: string;
     email: string;
