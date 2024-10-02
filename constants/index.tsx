@@ -28,3 +28,18 @@ export const sidebarLinks = [
     },
 
 ]
+
+export const storyStatus = [
+    {
+        label: "Ongoing",
+        value: "Ongoing",
+    },
+    {
+        label: "Completed",
+        value: "Completed",
+    },
+    {
+        label: "Hiatus",
+        value: "Hiatus",
+    }
+]

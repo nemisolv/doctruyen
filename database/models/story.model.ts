@@ -11,6 +11,8 @@ interface IStory extends Document {
     imgUrl: string;
     chapters: mongoose.Types.ObjectId[];
     averageRating: number; 
+    isAdult: boolean;
+    deleted: boolean;
 }
 
 const StorySchema = new Schema({
@@ -43,6 +45,14 @@ const StorySchema = new Schema({
         default: 0,
         set: (value: number) => Math.round(value * 10) / 10,
     },
+    isAdult: {
+        type: Boolean,
+        default: false,
+    },
+    deleted: {
+        type: Boolean,
+        default: false,
+    }
 
 
 }, {
