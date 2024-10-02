@@ -17,6 +17,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { AddNewStory } from "@/components/story/add-new-story";
 
 
 
@@ -35,9 +36,7 @@ const page = () => {
                 <div className="space-y-4 mb-4">
                     <div className="flex justify-between items-center">
                         <h2 className="text-2xl font-bold">Manage Stories</h2>
-                        <Button variant="primary">
-                            <Plus className="mr-2 size-4" />
-                            Add New Story</Button>
+                        <AddNewStory/>
                     </div>
                 </div>
 

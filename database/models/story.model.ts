@@ -7,6 +7,7 @@ interface IStory extends Document {
     author: string;
     description: string;
     genres: string[];
+    status: "Ongoing" | "Completed" | "Hiatus";
     imgUrl: string;
     chapters: mongoose.Types.ObjectId[];
     averageRating: number; 
@@ -27,6 +28,11 @@ const StorySchema = new Schema({
         type: String,
         required: true,
     }],
+    status: {
+        type: String,
+        enum: ['Ongoing', 'Completed', 'Hiatus'],
+        default: 'Ongoing',
+    },
     imgUrl: String,
     chapters: [{
         type: Schema.Types.ObjectId,
@@ -37,6 +43,7 @@ const StorySchema = new Schema({
         default: 0,
         set: (value: number) => Math.round(value * 10) / 10,
     },
+
 
 }, {
     timestamps: true,
