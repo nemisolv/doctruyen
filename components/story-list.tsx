@@ -77,6 +77,7 @@ const stories = [
         img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
     }
 ]
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const StoryList = ({ title, type }: StoryListProps) => {
 
     return <div className="my-6">
