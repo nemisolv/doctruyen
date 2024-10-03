@@ -9,7 +9,7 @@ export async function createUser(params: CreateUserParams) {
     try {
         connectDb();
         const newUser = await User.create(params);
-        return newUser;
+        return newUser.toObject();
 
     }catch(error) {
         console.log(error)

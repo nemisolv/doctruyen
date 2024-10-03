@@ -2,7 +2,7 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
-import {  deleteUser, updateUser } from '@/lib/actions/user.action'
+import {  createUser, deleteUser, updateUser } from '@/lib/actions/user.action'
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -54,17 +54,17 @@ export async function POST(req: Request) {
   const eventType = evt.type
   console.log('event type::', eventType)
   if(eventType === 'user.created') {
-    // const {id,first_name, last_name,email_addresses,image_url} = evt.data
+    const {id,first_name, last_name,email_addresses,image_url} = evt.data
     console.log('user data', evt.data)
 
-    // const mongoUser = await createUser({
-    //     clerkId:id,
-    //     name: `${first_name} ${last_name}`,
-    //     email: email_addresses[0].email_address,
-    //     imgUrl: image_url,
-    // })
+    const mongoUser = await createUser({
+        clerkId:id,
+        name: `${first_name} ${last_name}`,
+        email: email_addresses[0].email_address,
+        imgUrl: image_url,
+    })
     
-    return NextResponse.json({message: "OK",user:evt.data})
+    return NextResponse.json({message: "OK",user:mongoUser})
   }else if(eventType === 'user.updated') {
     const {id,first_name, last_name,email_addresses,image_url} = evt.data
     const updatedUser = await updateUser({
