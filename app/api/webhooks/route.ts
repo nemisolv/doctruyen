@@ -57,14 +57,14 @@ export async function POST(req: Request) {
     const {id,first_name, last_name,email_addresses,image_url} = evt.data
     console.log('user data', evt.data)
 
-    const mongoUser = await createUser({
+   await createUser({
         clerkId:id,
         name: `${first_name} ${last_name}`,
         email: email_addresses[0].email_address,
         imgUrl: image_url,
     })
     
-    return NextResponse.json({message: "OK",user:mongoUser})
+    return NextResponse.json({message: "OK"},{status:200})
   }else if(eventType === 'user.updated') {
     const {id,first_name, last_name,email_addresses,image_url} = evt.data
     const updatedUser = await updateUser({
