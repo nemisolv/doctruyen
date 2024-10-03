@@ -28,10 +28,12 @@ const UserSchema = new Schema<IUser>( {
     ratings: [{
         type: Schema.Types.ObjectId,
         ref: 'Rating',
+        default:[]
     }],
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment',
+        default: []
     }],
 }, {
     timestamps: true,
