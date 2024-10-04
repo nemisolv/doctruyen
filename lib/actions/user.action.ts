@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 export async function createUser(params: CreateUserParams) {
     try {
         console.log('before db')
-         connectDb();
+        await connectDb();
         console.log('after connection db successfully!');
         const newUser = await User.create(params);
         return newUser.toObject();
@@ -21,7 +21,7 @@ export async function createUser(params: CreateUserParams) {
 
 export async function findByClerkId(clerkId: string) {
     try {
-        connectDb();
+        await connectDb();
         const user = await User.findOne({ clerkId }).lean();
         return user;
     }
@@ -33,7 +33,7 @@ export async function findByClerkId(clerkId: string) {
 
 export async function updateUser(params: UpdateUserParams) {
     try {
-        connectDb();
+        await connectDb();
         const { clerkId, updateData, path } = params;
         console.log('clerkId', clerkId);
         console.log('updateData', updateData);

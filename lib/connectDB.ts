@@ -1,4 +1,4 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose from "mongoose";
 
 let isConnected = false;
 
@@ -14,10 +14,7 @@ export const connectDb = async () => {
     }
 
     try {
-        await mongoose.connect(connectionStr, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        }as ConnectOptions);
+        await mongoose.connect(connectionStr);
         isConnected = true; // Set the connection status to true
         console.log('Connected to MongoDB');
     } catch (error) {
