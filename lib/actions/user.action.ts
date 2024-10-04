@@ -3,7 +3,6 @@
 import { CreateUserParams, UpdateUserParams } from "@/types";
 import { connectDb } from "../connectDB";
 import User from "@/database/models/user.model";
-import { revalidatePath } from "next/cache";
 
 export async function createUser(params: CreateUserParams) {
     try {
