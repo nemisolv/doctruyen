@@ -3,6 +3,7 @@
 import { CreateUserParams, UpdateUserParams } from "@/types";
 import { connectDb } from "../connectDB";
 import User from "@/database/models/user.model";
+import { revalidatePath } from "next/cache";
 
 export async function createUser(params: CreateUserParams) {
     try {
@@ -37,10 +38,10 @@ export async function updateUser(params: UpdateUserParams) {
         console.log('clerkId', clerkId);
         console.log('updateData', updateData);
         console.log('path', path);
-        //  await User.findOneAndUpdate({ clerkId }, updateData, { new: true });
-        // if(path) {
-        //     revalidatePath(path);
-        // }
+         await User.findOneAndUpdate({ clerkId }, updateData, { new: true });
+        if(path) {
+            revalidatePath(path);
+        }
     }
     catch (error) {
         console.log(error)
