@@ -9,7 +9,7 @@ interface ImageUploadProps {
 
 export const ImageUpload = ({value, onChange}: ImageUploadProps) => {
     if(value) {
-        return <Image src={value} width={200} height={200} alt="" className="object-cover rounded-lg"/>
+        return <div className="h-[160px] w-[250px] relative"><Image src={value} fill alt="" className="object-cover rounded-lg"/></div>
     }
     return <UploadDropzone
     className="bg-gray-200"

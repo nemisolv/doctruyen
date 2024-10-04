@@ -7,9 +7,7 @@ import { revalidatePath } from "next/cache";
 
 export async function createUser(params: CreateUserParams) {
     try {
-        console.log('before db')
         await connectDb();
-        console.log('after connection db successfully!');
         const newUser = await User.create(params);
         return newUser.toObject();
 

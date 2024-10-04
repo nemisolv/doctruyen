@@ -34,6 +34,8 @@ import {
 } from "@/components/ui/select"
 import { storyStatus } from '@/constants';
 import { ImageUpload } from '../image-upload';
+import { createStory } from '@/lib/actions/story.action';
+import { useAuth } from '@clerk/nextjs';
 
 
 
@@ -45,12 +47,15 @@ const formSchema = z.object({
     genres: z.array(z.string()),
     status: z.enum(["Ongoing", "Completed", "Hiatus"]),
     imgUrl: z.string().url({ message: "Invalid image URL" }),
-    isAdult: z.boolean().default(false),
+    isAdult: z.boolean().default(false).optional(),
 })
 
 export const AddNewStory = () => {
     const [isMounted, setIsMounted] = useState(false);
     const [currentGenre, setCurrentGenre] = useState("");
+    const [openDialog, setOpenDialog] = useState(false);
+    const {userId} = useAuth();
+    
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -70,11 +75,17 @@ export const AddNewStory = () => {
     }, [])
     if (!isMounted) return null;
 
+    if(!userId) return null;
+
 
 
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         console.log(values)
+        const path = "/manage"
+        await createStory({clerkId:userId, data:values,path});
+        form.reset();
+        setOpenDialog(false);
     }
 
     const handleGenreKeyDown = (e: KeyboardEvent) => {
@@ -90,9 +101,11 @@ export const AddNewStory = () => {
         form.setValue('genres', genres.filter(g => g !== genre))
     }
 
-    return <Dialog>
+    return <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogTrigger>
-            <Button variant="primary">
+            <Button variant="primary"
+            onClick={() => setOpenDialog(true)}
+            >
                 <Plus className="mr-2 h-4 w-4" />
                 Add New Story
             </Button>

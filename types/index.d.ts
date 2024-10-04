@@ -10,3 +10,18 @@ export interface UpdateUserParams {
     updateData: Partial<IUser>;
     path?: string;
 }
+
+export interface CreateStoryParams {
+    clerkId: string;
+    data: {
+        title: string;
+        author: string;
+        description?: string;
+        genres: string[];
+        status: "Ongoing" | "Completed" | "Hiatus",
+        imgUrl: string;
+        isAdult?: boolean;
+    },
+    path?:string
+
+}

@@ -2,7 +2,8 @@ import mongoose, { Document, models, Schema } from 'mongoose';
 const DOCUMENT_NAME = 'Story';
 const COLLECTION_NAME = 'stories';
 
-interface IStory extends Document {
+export interface IStory extends Document {
+    clerkId: string;
     title: string;
     author: string;
     description: string;
@@ -13,9 +14,15 @@ interface IStory extends Document {
     averageRating: number; 
     isAdult: boolean;
     deleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const StorySchema = new Schema({
+    clerkId: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         required: true,

@@ -16,10 +16,15 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { AddNewStory } from "@/components/story/add-new-story";
+import { findAllStories } from "@/lib/actions/story.action";
+import {Badge} from "@/components/ui/badge";
 
 
 
-const page = () => {
+
+const page = async () => {
+    const stories = await findAllStories() || [];
+
     return <div className="flex-1 overflow-y-auto p-4 lg:p-6">
         <Tabs defaultValue="stories" className="space-y-4 ">
             <TabsList>
@@ -34,7 +39,7 @@ const page = () => {
                 <div className="space-y-4 mb-4">
                     <div className="flex justify-between items-center">
                         <h2 className="text-2xl font-bold">Manage Stories</h2>
-                        <AddNewStory/>
+                        <AddNewStory />
                     </div>
                 </div>
 
@@ -56,46 +61,25 @@ const page = () => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                <TableRow>
-                                    <TableCell >One piece</TableCell>
-                                    <TableCell>Manga, Comic</TableCell>
-                                    <TableCell className="text-center">1100</TableCell>
-                                    <TableCell>Ongoing</TableCell>
-                                    <TableCell >2024-10-02</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell >One piece</TableCell>
-                                    <TableCell>Manga, Comic</TableCell>
-                                    <TableCell>1100</TableCell>
-                                    <TableCell>Ongoing</TableCell>
-                                    <TableCell >2024-10-02</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell >One piece</TableCell>
-                                    <TableCell>Manga, Comic</TableCell>
-                                    <TableCell>1100</TableCell>
-                                    <TableCell>Ongoing</TableCell>
-                                    <TableCell >2024-10-02</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell >One piece</TableCell>
-                                    <TableCell>Manga, Comic</TableCell>
-                                    <TableCell>1100</TableCell>
-                                    <TableCell>Ongoing</TableCell>
-                                    <TableCell >2024-10-02</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell >One piece</TableCell>
-                                    <TableCell>Manga, Comic</TableCell>
-                                    <TableCell>1100</TableCell>
-                                    <TableCell>Ongoing</TableCell>
-                                    <TableCell >2024-10-02</TableCell>
-                                </TableRow>
+                                {stories.map(story => (
+                                    <TableRow key={story._id}>
+                                        <TableCell >{story.title}</TableCell>
+                                        <TableCell className="flex items-center gap-1">
+                                            {story.genres.map((genre: string) => (
+                                                <Badge key={genre} >{genre}</Badge>
+                                            ))}
+                                        </TableCell>
+                                        <TableCell className="text-center">{story.chapters.length}</TableCell>
+                                        <TableCell>{story.status}</TableCell>
+                                        <TableCell >{story.updatedAt.toISOString()}</TableCell>
+                                    </TableRow>
+                                ))}
+
                             </TableBody>
                         </Table>
 
                     </CardContent>
-                   
+
                 </Card>
 
 
