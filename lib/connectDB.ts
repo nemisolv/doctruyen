@@ -1,22 +1,27 @@
-    import mongoose from "mongoose";
+import mongoose, { ConnectOptions } from "mongoose";
 
-    let isConnected = false;
+let isConnected = false;
 
-    export const connectDb =  () => {
-        const connectionStr = process.env.MONGO_URI;
-        if(!connectionStr) {
-            throw new Error('Please add your Mongo URI to .env.local');
-        }
-        if(isConnected) {
-            console.log('Using existing connection');
-            return;
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        mongoose.connect(connectionStr).then(_ => {
-            isConnected = true;
-            console.log('Connected to MongoDB');
-        }).catch(error => {
-            console.log('Error connecting to MongoDB', error);
-        }) 
+export const connectDb = async () => {
+    const connectionStr = process.env.MONGO_URI;
+    if (!connectionStr) {
+        throw new Error('Please add your Mongo URI to .env.local');
     }
+
+    if (isConnected) {
+        console.log('Using existing connection');
+        return;
+    }
+
+    try {
+        await mongoose.connect(connectionStr, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        }as ConnectOptions);
+        isConnected = true; // Set the connection status to true
+        console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+        throw new Error('Could not connect to MongoDB');
+    }
+};
