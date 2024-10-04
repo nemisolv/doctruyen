@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Toaster } from "@/components/ui/toaster"
+
+
+
 import "./globals.css";
 import {Inter} from 'next/font/google';
 
@@ -29,6 +33,7 @@ export default function RootLayout({
          storageKey="doctruyen-theme"
         >
         {children}
+        <Toaster />
         </ThemeProvider>
       </body>
     </html>

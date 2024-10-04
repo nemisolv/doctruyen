@@ -48,7 +48,7 @@ export async function updateUser(params: UpdateUserParams) {
 export async function deleteUser(clerkId: string) {
     try {
         connectDb();
-        const user = await User.findOneAndDelete({ clerkId });
+        const user = await User.findOneAndUpdate({ clerkId }, { deleted: true });
         if(!user) {
             throw new Error("User not found");
         }

@@ -36,6 +36,7 @@ import { storyStatus } from '@/constants';
 import { ImageUpload } from '../image-upload';
 import { createStory } from '@/lib/actions/story.action';
 import { useAuth } from '@clerk/nextjs';
+import { useToast } from '@/hooks/use-toast';
 
 
 
@@ -55,6 +56,7 @@ export const AddNewStory = () => {
     const [currentGenre, setCurrentGenre] = useState("");
     const [openDialog, setOpenDialog] = useState(false);
     const {userId} = useAuth();
+    const {toast} = useToast();
     
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -81,11 +83,22 @@ export const AddNewStory = () => {
 
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values)
+      try {
         const path = "/manage"
         await createStory({clerkId:userId, data:values,path});
         form.reset();
         setOpenDialog(false);
+        toast({
+            title: 'Story created',
+            description: "The story has been successfully created.",
+        })
+      }catch(error) {
+        console.log('Error creating story:', error);
+        toast({
+            title: 'Error creating story',
+            description: "An error occurred while creating the story.",
+        })
+      }
     }
 
     const handleGenreKeyDown = (e: KeyboardEvent) => {

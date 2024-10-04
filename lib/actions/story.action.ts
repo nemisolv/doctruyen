@@ -5,6 +5,7 @@ import { connectDb } from "../connectDB";
 import User from "@/database/models/user.model";
 import Story, { IStory } from "@/database/models/story.model";
 import { revalidatePath } from "next/cache";
+import Genre from "@/database/models/genre.model";
 
 export async function createStory(params: CreateStoryParams): Promise<IStory | undefined> {
     try {
@@ -18,13 +19,36 @@ export async function createStory(params: CreateStoryParams): Promise<IStory | u
         if(!user) {
             throw new Error('User not found');
         }
+        
         const newStory = await Story.create({
-            ...data,
+            title: data.title,
+            description: data.description,
+            imgUrl: data.imgUrl,
+            author:data.author,
+            status: data.status,
+            isAdult: data.isAdult || false,
             clerkId
         })
         if(!newStory) {
             throw new Error('Error creating story');
         }
+        const genresParams= data.genres;
+        const genres = [];
+        for(const genre of genresParams) {
+            const existingGenre = await Genre.findOneAndUpdate({
+                name: {$regex : new RegExp(`^${genre}$`,'i')}},
+                {$setOnInsert: {name: genre}, $push: {stories: newStory._id}},
+                {upsert: true, new: true}
+            )
+            genres.push(existingGenre._id);
+        }
+
+        await Story.findByIdAndUpdate(newStory._id, {
+            $push: {genres: {$each: genres}}
+        });
+
+
+
         if(path) {
             revalidatePath(path);
         }
@@ -40,7 +64,11 @@ export async function createStory(params: CreateStoryParams): Promise<IStory | u
 export async function findAllStories():Promise<IStory[] | undefined> {
     try {
         connectDb();
-        const stories = await Story.find({deleted: false});
+        const stories = await Story.find({deleted: false}).populate({
+            path: 'genres',
+            model:Genre,
+            select: "_id name"
+        })
         return stories;
     }catch(error) {
         console.log('Error finding stories:', error);

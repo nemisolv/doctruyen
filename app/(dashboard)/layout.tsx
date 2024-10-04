@@ -7,8 +7,8 @@ const layout = ({children}: {children: React.ReactNode}) => {
         <main className="relative">
             <Header/>
             <div className="flex">
-                <LeftSidebar/>
-                <div className="flex min-h-screen flex-1 flex-col w-full  ">
+                <div><LeftSidebar/></div>
+                <div className="flex min-h-screen flex-1 flex-col w-full sm:ml-64">
                 <div className="mx-auto max-w-5xl mt-16 w-full ">{children}</div>
                 </div>
             </div>

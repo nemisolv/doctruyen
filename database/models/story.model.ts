@@ -7,7 +7,7 @@ export interface IStory extends Document {
     title: string;
     author: string;
     description: string;
-    genres: string[];
+    genres: mongoose.Types.ObjectId[];
     status: "Ongoing" | "Completed" | "Hiatus";
     imgUrl: string;
     chapters: mongoose.Types.ObjectId[];
@@ -34,8 +34,8 @@ const StorySchema = new Schema({
     },
     description: String,
     genres: [{
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Genre',
     }],
     status: {
         type: String,
