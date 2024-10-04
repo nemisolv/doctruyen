@@ -66,16 +66,18 @@ export async function POST(req: Request) {
     
     return NextResponse.json({message: "OK"},{status:200})
   }else if(eventType === 'user.updated') {
-    const {id,first_name, last_name,email_addresses,image_url} = evt.data
-    const updatedUser = await updateUser({
-        clerkId:id,
-        updateData:{
-            name: `${first_name} ${last_name}`,
-            email: email_addresses[0].email_address,
-            imgUrl: image_url,
-        }
-    })
-    return NextResponse.json({message: "OK",user:updatedUser})
+    // const {id,first_name, last_name,email_addresses,image_url} = evt.data
+    // const updatedUser = await updateUser({
+    //     clerkId:id,
+    //     updateData:{
+    //         name: `${first_name} ${last_name}`,
+    //         email: email_addresses[0].email_address,
+    //         imgUrl: image_url,
+    //     }
+    // })
+    console.log('just updated user not stored in db')
+
+    return NextResponse.json({message: "OK"})
 
   }else if(eventType === 'user.deleted') {
     const {id} = evt.data

@@ -35,10 +35,13 @@ export async function updateUser(params: UpdateUserParams) {
     try {
         connectDb();
         const { clerkId, updateData, path } = params;
-         await User.findOneAndUpdate({ clerkId }, updateData, { new: true });
-        if(path) {
-            revalidatePath(path);
-        }
+        console.log('clerkId', clerkId);
+        console.log('updateData', updateData);
+        console.log('path', path);
+        //  await User.findOneAndUpdate({ clerkId }, updateData, { new: true });
+        // if(path) {
+        //     revalidatePath(path);
+        // }
     }
     catch (error) {
         console.log(error)
