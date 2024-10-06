@@ -1,3 +1,5 @@
+import { IStory } from "@/database/models/story.model";
+
 export interface CreateUserParams {
     clerkId: string;
     name: string;
@@ -24,4 +26,24 @@ export interface CreateStoryParams {
     },
     path?:string
 
+}
+
+export interface IFullInfoStory extends IStory {
+    genres: IGenre[];
+    chapters: IChapter[];
+}
+
+export interface GetAllChapterParams {
+    storyId: string;
+}
+
+export interface CreateChapterParams {
+    storyId: string;
+    data: {
+        
+        title: string;
+        content: string;
+        chapterNumber: number;
+    },
+    path?: string;
 }

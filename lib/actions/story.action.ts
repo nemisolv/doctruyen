@@ -1,6 +1,6 @@
 "use server";
 
-import { CreateStoryParams } from "@/types";
+import { CreateStoryParams, IFullInfoStory } from "@/types";
 import { connectDb } from "../connectDB";
 import User from "@/database/models/user.model";
 import Story, { IStory } from "@/database/models/story.model";
@@ -47,8 +47,6 @@ export async function createStory(params: CreateStoryParams): Promise<IStory | u
             $push: {genres: {$each: genres}}
         });
 
-
-
         if(path) {
             revalidatePath(path);
         }
@@ -61,7 +59,7 @@ export async function createStory(params: CreateStoryParams): Promise<IStory | u
     }
 }
 
-export async function findAllStories():Promise<IStory[] | undefined> {
+export async function findAllStories():Promise<IFullInfoStory[] | undefined> {
     try {
         connectDb();
         const stories = await Story.find({deleted: false}).populate({
@@ -72,6 +70,20 @@ export async function findAllStories():Promise<IStory[] | undefined> {
         return stories;
     }catch(error) {
         console.log('Error finding stories:', error);
+        throw error;
+    }
+}
+
+export async function deleteStory(_id: string) {
+    try {
+        connectDb();
+        const story = await Story.findByIdAndUpdate(_id, {deleted: true});
+        if(!story) {
+            throw new Error('Story not found');
+        }
+        
+    }catch(error) {
+        console.log('Error deleting story:', error);
         throw error;
     }
 }

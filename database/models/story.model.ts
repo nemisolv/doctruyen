@@ -3,6 +3,7 @@ const DOCUMENT_NAME = 'Story';
 const COLLECTION_NAME = 'stories';
 
 export interface IStory extends Document {
+    _id: mongoose.Types.ObjectId;
     clerkId: string;
     title: string;
     author: string;
