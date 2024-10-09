@@ -1,5 +1,5 @@
 "use client"
-import {  UploadDropzone } from "@/lib/utils";
+import {  UploadDropzone } from "@/lib/uploadthing";
 import Image from "next/image";
 
 interface ImageUploadProps {

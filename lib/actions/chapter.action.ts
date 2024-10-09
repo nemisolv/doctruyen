@@ -35,6 +35,7 @@ try {
         title: data.title,
         content: data.content,
         chapterNumber: data.chapterNumber,
+        imgsUrl: data.imgsUrl
     });
     if(!chapter) {
         throw new Error("Error creating chapter");
@@ -44,7 +45,8 @@ try {
     if(path) {
         revalidatePath(path);
     }
-    return chapter.toObject();
+    const plainChapter = JSON.parse(JSON.stringify(chapter));
+    return plainChapter;
 }catch(error) {
     console.log(error);
     throw error;

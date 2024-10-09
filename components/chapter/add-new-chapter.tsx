@@ -7,13 +7,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+
 
 
 import { Plus } from "lucide-react";
@@ -41,7 +35,7 @@ export const AddNewChapter = ({storyId}: {storyId:string}) => {
             </Button>
 
         </DialogTrigger>
-        <DialogContent className="max-w-4xl w-full  bg-white dark:bg-[#313338]">
+        <DialogContent className="max-w-4xl w-full  ">
             <DialogHeader>
                 <DialogTitle>Add New Chapter</DialogTitle>
                 <DialogDescription>Fill in the details of the chapter</DialogDescription>

@@ -7,7 +7,8 @@ export interface IChapter extends Document {
     _id: mongoose.Types.ObjectId;
     storyId: mongoose.Types.ObjectId;
     title: string;
-    content: string;
+    content?: string;
+    imgsUrl?: string[];
     chapterNumber: number;
     comments: mongoose.Types.ObjectId[];
     createdAt: Date;
@@ -26,8 +27,8 @@ const ChapterSchema = new Schema({
     },
     content: {
         type: String,
-        required: true,
     },
+    imgsUrl: [String],
     chapterNumber: {
         type: Number,
         required: true,

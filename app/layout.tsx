@@ -24,7 +24,7 @@ export default function RootLayout({
     <ClerkProvider>
     <html lang="en">
       <body
-        className={`${inter.className} h-full bg-white dark:bg-[#313338]`}
+        className={`${inter.className} h-full `}
       >
         <ThemeProvider
          attribute="class"

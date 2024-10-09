@@ -42,8 +42,9 @@ export interface CreateChapterParams {
     data: {
         
         title: string;
-        content: string;
+        content?: string;
         chapterNumber: number;
+        imgsUrl?: string[];
     },
     path?: string;
 }
