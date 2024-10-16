@@ -50,7 +50,7 @@ const StorySchema = new Schema({
     }],
     averageRating: {
         type: Number,
-        default: 0,
+        default: 4.3,
         set: (value: number) => Math.round(value * 10) / 10,
     },
     isAdult: {

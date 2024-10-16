@@ -44,7 +44,7 @@ import { useToast } from '@/hooks/use-toast';
 const formSchema = z.object({
     title: z.string().min(1, { message: "Story name is required" }),
     author: z.string().min(1, { message: "Author name is required" }),
-    description: z.string().min(1, { message: "Description is required" }),
+    description: z.string().min(1, { message: "Description is required" }).max(300,{message: "Description is too long. Max 300 characters"}),
     genres: z.array(z.string()),
     status: z.enum(["Ongoing", "Completed", "Hiatus"]),
     imgUrl: z.string().url({ message: "Invalid image URL" }),

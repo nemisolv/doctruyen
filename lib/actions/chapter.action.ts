@@ -1,6 +1,6 @@
 "use server"
 
-import { CreateChapterParams, GetAllChapterParams } from "@/types";
+import { CreateChapterParams, GetAllChapterParams, GetChapterParams } from "@/types";
 import { connectDb } from "../connectDB";
 import Story, { IStory } from "@/database/models/story.model";
 import Chapter, { IChapter } from "@/database/models/chapter.model";
@@ -51,4 +51,21 @@ try {
     console.log(error);
     throw error;
 }
+}
+
+export async function findChapterByStoryIdChapterId(params: GetChapterParams): Promise<IChapter | undefined> {
+
+    try {
+        connectDb();
+        const { storyId, chapterId } = params;
+        const chapter = await Chapter.findOne({ storyId, _id: chapterId });
+        if(!chapter) {
+            throw new Error("Chapter not found");
+        }
+        return chapter;
+    }catch(error) {
+        console.log(error);
+        throw error;
+    }
+
 }

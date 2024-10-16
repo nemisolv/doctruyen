@@ -10,6 +10,7 @@ export interface IChapter extends Document {
     content?: string;
     imgsUrl?: string[];
     chapterNumber: number;
+    releaseDate?: Date;
     comments: mongoose.Types.ObjectId[];
     createdAt: Date;
     updatedAt: Date;
@@ -32,6 +33,9 @@ const ChapterSchema = new Schema({
     chapterNumber: {
         type: Number,
         required: true,
+    },
+    releaseDate: {
+        type: Date
     },
     comments: [{
         type: Schema.Types.ObjectId,

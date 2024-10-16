@@ -4,6 +4,7 @@ const DOCUMENT_NAME = 'Genre';
 const COLLECTION_NAME = 'genres';
 
 export interface IGenre extends Document {
+    _id: string;
     name: string;
     description: string;
     createdAt: Date;

@@ -1,11 +1,12 @@
 "use server";
 
-import { CreateStoryParams, IFullInfoStory } from "@/types";
+import { CreateStoryParams, GetStoryParams, IFullInfoStory } from "@/types";
 import { connectDb } from "../connectDB";
 import User from "@/database/models/user.model";
 import Story, { IStory } from "@/database/models/story.model";
 import { revalidatePath } from "next/cache";
 import Genre from "@/database/models/genre.model";
+import Chapter from "@/database/models/chapter.model";
 
 export async function createStory(params: CreateStoryParams): Promise<IStory | undefined> {
     try {
@@ -66,13 +67,42 @@ export async function findAllStories():Promise<IFullInfoStory[] | undefined> {
             path: 'genres',
             model:Genre,
             select: "_id name"
-        })
-        return stories;
+        }).limit(10);
+        return JSON.parse(JSON.stringify(stories));
     }catch(error) {
         console.log('Error finding stories:', error);
         throw error;
     }
 }
+
+export async function findStoryPreview(params: GetStoryParams): Promise<IFullInfoStory | undefined> 
+{
+    const { _id } = params;
+    if(!_id) {
+        throw new Error('Story ID is required');
+    }
+
+    const story = await Story.findById(_id).populate({
+        path: 'genres',
+        model: Genre,
+        select: "_id name"
+    }).populate({
+        path: 'chapters',
+        model: Chapter,
+        select: "_id title chapterNumber"
+    });
+
+    if(!story) {
+        throw new Error('Story not found');
+    }
+
+    return story.toObject();
+
+
+}
+
+
+
 
 export async function deleteStory(_id: string) {
     try {

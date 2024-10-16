@@ -6,79 +6,35 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { findAllStories } from "@/lib/actions/story.action";
 
 interface StoryListProps {
     title: string;
-    type: "manga" | "comic" | "popular";
+    type: "manga" | "comic" | "popular" ;
 }
 
-const stories = [
-    {
-        name: "Demon slayer: Kimetsu NoYaiba",
-        genres: ['Adventure', 'Dark fantasy'],
-        desc: 'Tanjiro Kamado, joined with Inosuke and Zenitsu, boards the Mugen Train on a new mission with the Flame Pillar, Kyojuro Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!',
-        chapter: 200,
-        img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
-    },
-    {
-        name: "One Piece",
-        genres: ['Adventure', 'Dark fantasy'],
-        desc: 'Tanjiro Kamado, joined with Inosuke and Zenitsu, boards the Mugen Train on a new mission with the Flame Pillar, Kyojuro Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!',
-        chapter: 200,
-        img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
-    },
-    {
-        name: "Naruto",
-        genres: ['Adventure', 'Dark fantasy'],
-        desc: 'Tanjiro Kamado, joined with Inosuke and Zenitsu, boards the Mugen Train on a new mission with the Flame Pillar, Kyojuro Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!',
-        chapter: 200,
-        img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
-    },
-    {
-        name: "Demon slayer: Kimetsu NoYaiba",
-        genres: ['Adventure', 'Dark fantasy'],
-        desc: 'Tanjiro Kamado, joined with Inosuke and Zenitsu, boards the Mugen Train on a new mission with the Flame Pillar, Kyojuro Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!',
-        chapter: 200,
-        img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
-    },
-    {
-        name: "One Piece",
-        genres: ['Adventure', 'Dark fantasy'],
-        desc: 'Tanjiro Kamado, joined with Inosuke and Zenitsu, boards the Mugen Train on a new mission with the Flame Pillar, Kyojuro Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!',
-        chapter: 200,
-        img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
-    },
-    {
-        name: "Naruto",
-        genres: ['Adventure', 'Dark fantasy'],
-        desc: 'Tanjiro Kamado, joined with Inosuke and Zenitsu, boards the Mugen Train on a new mission with the Flame Pillar, Kyojuro Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!',
-        chapter: 200,
-        img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
-    },
-    {
-        name: "Demon slayer: Kimetsu NoYaiba",
-        genres: ['Adventure', 'Dark fantasy'],
-        desc: 'Tanjiro Kamado, joined with Inosuke and Zenitsu, boards the Mugen Train on a new mission with the Flame Pillar, Kyojuro Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!',
-        chapter: 200,
-        img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
-    },
-    {
-        name: "One Piece",
-        genres: ['Adventure', 'Dark fantasy'],
-        desc: 'Tanjiro Kamado, joined with Inosuke and Zenitsu, boards the Mugen Train on a new mission with the Flame Pillar, Kyojuro Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!',
-        chapter: 200,
-        img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
-    },
-    {
-        name: "Naruto",
-        genres: ['Adventure', 'Dark fantasy'],
-        desc: 'Tanjiro Kamado, joined with Inosuke and Zenitsu, boards the Mugen Train on a new mission with the Flame Pillar, Kyojuro Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!',
-        chapter: 200,
-        img_url: 'https://cdn.shopify.com/s/files/1/0878/6457/4255/files/cap-doi-trong-kimetsu-no-yaiba__1__12cc214f55b9481a90a37730b0d05a46.jpg?v=1716181901'
-    }
-]
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const StoryList = ({ title, type }: StoryListProps) => {
+    const [stories,setStories] = useState([])
+
+    console.log(stories)
+
+
+    useEffect(() => {
+        const fetchStories = async () => {
+            try {
+                const res = await findAllStories();
+                console.log(res)
+                if(res) {
+                    setStories(res);
+                }
+            } catch (error) {
+                console.error('Error fetching stories:', error);
+            }
+        };
+        fetchStories();
+    }, []);
 
     return <div className="my-6">
         <h2 className="dark:text-white text-3xl my-2 italic uppercase">{title}</h2>
@@ -92,16 +48,17 @@ export const StoryList = ({ title, type }: StoryListProps) => {
                 
             >
                 {stories.map((story, index) => (
-                    <SwiperSlide key={index}><div className="py-2 px-3 rounded-lg  w-full h-[350px] select-none cursor-pointer ">
-                        <Image src={story.img_url} alt="" className=" object-cover rounded-lg" height={250} width={320} />
+                    <SwiperSlide key={index}><Link href={`/story/preview?_id=${story._id}`}
+                    
+                    className="py-2 px-3 rounded-lg  w-full h-[350px] select-none cursor-pointer ">
+                        <Image src={story.imgUrl} alt="" className=" object-cover rounded-lg" height={250} width={320} />
                         <div>
-                            <h4 className="text-lg text-center line-clamp-1">{story.name}</h4>
-                            <span className="text-sm text-zinc-400 line-clamp-1">Ch. {story.chapter} the bath 3</span>
-                            <span> <StarFilledIcon className="text-yellow-400 inline" /> 4.3
-
+                            <h4 className="text-lg text-center line-clamp-1">{story.title}</h4>
+                            <span className="text-sm text-zinc-400 line-clamp-1">Ch. {story.chapters.length} </span>
+                            <span> <StarFilledIcon className="text-yellow-400 inline" /> {story.averageRating}
                             </span>
                         </div>
-                    </div></SwiperSlide>
+                    </Link></SwiperSlide>
 
                 ))}
             </Swiper>

@@ -48,3 +48,12 @@ export interface CreateChapterParams {
     },
     path?: string;
 }
+
+export interface GetStoryParams {
+    _id: string;
+}
+
+export interface GetChapterParams {
+    storyId: string;
+    chapterId: string;
+}
