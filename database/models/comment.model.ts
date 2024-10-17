@@ -4,10 +4,13 @@ import { Schema } from "mongoose";
 const DOCUMENT_NAME = 'Comment';
 const COLLECTION_NAME = 'comments';
 
-interface IComment extends Document {
+export interface IComment extends Document {
+    _id: mongoose.Types.ObjectId;
     chapterId: mongoose.Types.ObjectId;
     userId: mongoose.Types.ObjectId;
     content: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const CommentSchema = new Schema({
